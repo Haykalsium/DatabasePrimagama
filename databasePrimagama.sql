@@ -36,8 +36,6 @@ CREATE TABLE [MsTeacher] (
 	TeacherAddress VARCHAR(50) NOT NULL
 );
 
-
-
 INSERT INTO [MsTeacher] (TeacherID, TeacherName, TeacherGender, TeacherAddress)
 VALUES 
     ('TE001', 'John Smith', 'Male', '123 Main St'),
@@ -66,8 +64,6 @@ CREATE TABLE [MsGrade] (
 	GradeName VARCHAR(50) NOT NULL
 );
 
-
-
 INSERT INTO [MsGrade] (GradeID, GradeName)
 VALUES 
     ('Gr001', 'Grade 1'),
@@ -76,6 +72,20 @@ VALUES
     ('Gr004', 'Grade 4'),
     ('Gr005', 'Grade 5');
 
+	CREATE TABLE [Package] (
+	PackageID CHAR(5) PRIMARY KEY CHECK (PackageID LIKE 'PK[0-9][0-9][0-9]'),
+	PackageName VARCHAR(50) NOT NULL,
+	PackagePrice VARCHAR (10) NOT NULL
+	
+);
+
+INSERT INTO [Package] (PackageID, PackageName, PackagePrice)
+VALUES
+    ('PK001', 'Basic Package', 100),
+    ('PK002', 'Standard Package', 200),
+    ('PK003', 'Premium Package', 300),
+    ('PK004', 'Advanced Package', 400),
+    ('PK005', 'Ultimate Package', 500);
 
 CREATE TABLE [Course] (
     CourseID CHAR(5) PRIMARY KEY CHECK (CourseID LIKE 'CO[0-9][0-9][0-9]'),
@@ -86,8 +96,6 @@ CREATE TABLE [Course] (
     CourseDay VARCHAR(50) NOT NULL
 );
 
-
-
 	INSERT INTO [Course] (CourseID, TeacherID, PackageID, CourseName, CourseTime, CourseDay)
 VALUES
     ('CO001', 'TE001', 'PK001', 'Mathematics', 60, 'Monday'),
@@ -96,9 +104,22 @@ VALUES
     ('CO004', 'TE004', 'PK002', 'Chemistry', 90, 'Thursday'),
     ('CO005', 'TE005', 'PK003', 'History', 60, 'Friday');
 
+		CREATE TABLE [Parrents] (
+	ParrentsID CHAR(5) PRIMARY KEY CHECK (ParrentsID LIKE 'PR[0-9][0-9][0-9]'),
+	ParrentsPhoneNumber VARCHAR(12) NOT NULL,
+	ParrentsName VARCHAR(50)NOT NULL,
+	ParrentsAddress VARCHAR (50)NOT NULL,
+	ParrentsGender VARCHAR (10) CHECK(ParrentsGender IN ('Female', 'Male')) NOT NULL
+);
 
-	
 
+INSERT INTO [Parrents] (ParrentsID, ParrentsPhoneNumber, ParrentsName, ParrentsAddress, ParrentsGender)
+VALUES
+    ('PR001', 1234567890, 'John Smith', '123 Main St', 'Male'),
+    ('PR002', 9876543210, 'Jane Johnson', '456 Elm St', 'Female'),
+    ('PR003', 2345678901, 'Michael Williams', '789 Oak Ave', 'Male'),
+    ('PR004', 8765432109, 'Sarah Davis', '321 Pine Rd', 'Female'),
+    ('PR005', 3456789012, 'David Brown', '654 Maple Ln', 'Male');
 
 CREATE TABLE [Registration] (
     RegistrationID CHAR(5) PRIMARY KEY CHECK (RegistrationID LIKE 'RT[0-9][0-9][0-9]'),
@@ -120,27 +141,6 @@ VALUES
     ('RT003', 'PR003', 'ST013', 'Gr003', 'example3@gmail.com', 'password3', 'Debit Card', '2023-06-03'),
     ('RT004', 'PR004', 'ST014', 'Gr004', 'example4@gmail.com', 'password4', 'Cash', '2023-06-04'),
     ('RT005', 'PR005', 'ST015', 'Gr005', 'example5@gmail.com', 'password5', 'Credit Card', '2023-06-05');
-	
-
-
-CREATE TABLE [Parrents] (
-	ParrentsID CHAR(5) PRIMARY KEY CHECK (ParrentsID LIKE 'PR[0-9][0-9][0-9]'),
-	ParrentsPhoneNumber VARCHAR(12) NOT NULL,
-	ParrentsName VARCHAR(50)NOT NULL,
-	ParrentsAddress VARCHAR (50)NOT NULL,
-	ParrentsGender VARCHAR (10) CHECK(ParrentsGender IN ('Female', 'Male')) NOT NULL
-);
-
-
-INSERT INTO [Parrents] (ParrentsID, ParrentsPhoneNumber, ParrentsName, ParrentsAddress, ParrentsGender)
-VALUES
-    ('PR001', 1234567890, 'John Smith', '123 Main St', 'Male'),
-    ('PR002', 9876543210, 'Jane Johnson', '456 Elm St', 'Female'),
-    ('PR003', 2345678901, 'Michael Williams', '789 Oak Ave', 'Male'),
-    ('PR004', 8765432109, 'Sarah Davis', '321 Pine Rd', 'Female'),
-    ('PR005', 3456789012, 'David Brown', '654 Maple Ln', 'Male');
-
-	
 
 
 CREATE TABLE [RegistrationDetail] (
@@ -159,22 +159,6 @@ VALUES
     ('II004', 'PK002', 'RT004', 250, 2500),
     ('II005', 'PK003', 'RT005', 120, 1200);
 
-CREATE TABLE [Package] (
-	PackageID CHAR(5) PRIMARY KEY CHECK (PackageID LIKE 'PK[0-9][0-9][0-9]'),
-	PackageName VARCHAR(50) NOT NULL,
-	PackagePrice VARCHAR (10) NOT NULL
-	
-);
-
-INSERT INTO [Package] (PackageID, PackageName, PackagePrice)
-VALUES
-    ('PK001', 'Basic Package', 100),
-    ('PK002', 'Standard Package', 200),
-    ('PK003', 'Premium Package', 300),
-    ('PK004', 'Advanced Package', 400),
-    ('PK005', 'Ultimate Package', 500);
-
-
 CREATE TABLE [Payment] (
 	PaymentID CHAR(5) PRIMARY KEY CHECK (PaymentID LIKE 'PA[0-9][0-9][0-9]'),
 	RegistrationID CHAR(5) FOREIGN KEY REFERENCES Registration(RegistrationID) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL,
@@ -190,4 +174,3 @@ VALUES
     ('PA003', 'RT003', 150, 'Debit Card', '2023-06-03'),
     ('PA004', 'RT004', 250, 'Cash', '2023-06-04'),
     ('PA005', 'RT005', 120, 'Credit Card', '2023-06-05');
-
